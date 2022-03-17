@@ -2,6 +2,10 @@ public class Moto extends Automovel{
     int cilindradas, alternador;
     double taxaCompressao;
 
+    public Moto() {
+        super();
+    }
+
     public int getCilindradas() {
         return cilindradas;
     }
@@ -31,5 +35,17 @@ public class Moto extends Automovel{
         this.cilindradas = cilindradas;
         this.alternador = alternador;
         this.taxaCompressao = taxaCompressao;
+    }
+
+    @Override
+    public String toString() {
+        return "Moto{" +
+                "marca='" + marca + '\'' +
+                ", modelo='" + modelo + '\'' +
+                ", numPlaca='" + numPlaca + '\'' +
+                ", cilindradas=" + cilindradas +
+                ", alternador=" + alternador +
+                ", taxaCompressao=" + taxaCompressao +
+                '}';
     }
 }

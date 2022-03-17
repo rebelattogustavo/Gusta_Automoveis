@@ -41,7 +41,12 @@ public class Main {
                             System.out.println(carro.toString());
                         }
                         break;
-                    case 2: 
+                    case 2:
+                        Moto moto = new Moto();
+                        for (int i = 0;i<listaMotos.size();i++){
+                            System.out.println(moto.toString());
+                        }
+
                 }
                 break;
             case 3:
@@ -98,11 +103,11 @@ public class Main {
 
     }
 
-    private static int verificaAutomovel(ArrayList<Carro> listaCarros, ArrayList<Moto> listaMotos, int opcaoTipo2){
+    private static int verificaAutomovel(ArrayList<Carro> listaCarros, ArrayList<Moto> listaMotos, int opcaoTipo){
         System.out.println("Informe a placa do veículo: ");
         String numPlaca = tec.next();
         int indice = -1;
-        switch (opcaoTipo2){
+        switch (opcaoTipo){
             case 1:
                 for (int i =0; i < listaCarros.size(); i++){
                     if(listaCarros.get(i).getNumPlaca() == numPlaca){
