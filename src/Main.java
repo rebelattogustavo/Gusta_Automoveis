@@ -89,7 +89,7 @@ public class Main {
                     menuPrincipal(listaCarros,listaMotos,listaCarrosVendidos,listaMotosVendidas);
                 }
                 int indice = verificaAutomovel(listaCarros,listaMotos,listaCarrosVendidos,listaMotosVendidas,opcaoTipo);
-                if(verificaAutomovel(listaCarros,listaMotos,listaCarrosVendidos,listaMotosVendidas,opcaoTipo) == -1){
+                if(indice == -1){
                     System.out.println("Placa não encontrada!");
                     menuPrincipal(listaCarros,listaMotos,listaCarrosVendidos,listaMotosVendidas);
                 }
@@ -127,7 +127,7 @@ public class Main {
                     menuPrincipal(listaCarros,listaMotos,listaCarrosVendidos,listaMotosVendidas);
                 }
                 indice = verificaAutomovel(listaCarros,listaMotos,listaCarrosVendidos,listaMotosVendidas,opcaoTipo);
-                if(verificaAutomovel(listaCarros,listaMotos,listaCarrosVendidos,listaMotosVendidas,opcaoTipo) == -1){
+                if(indice == -1){
                     System.out.println("Placa não encontrada!");
                     menuPrincipal(listaCarros,listaMotos,listaCarrosVendidos,listaMotosVendidas);
                 }else{
@@ -141,7 +141,7 @@ public class Main {
                     menuPrincipal(listaCarros,listaMotos,listaCarrosVendidos,listaMotosVendidas);
                 }
                 indice = verificaAutomovel(listaCarros,listaMotos,listaCarrosVendidos,listaMotosVendidas,opcaoTipo);
-                if(verificaAutomovel(listaCarros,listaMotos,listaCarrosVendidos,listaMotosVendidas,opcaoTipo) == -1){
+                if(indice == -1){
                     System.out.println("Placa não encontrada!");
                     menuPrincipal(listaCarros,listaMotos,listaCarrosVendidos,listaMotosVendidas);
                 }else{
