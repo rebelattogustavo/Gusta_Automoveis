@@ -30,8 +30,8 @@ public class Moto extends Automovel{
         this.taxaCompressao = taxaCopressao;
     }
 
-    public Moto(String marca, String modelo, String numPlaca, int cilindradas, int alternador, double taxaCompressao) {
-        super(marca, modelo, numPlaca);
+    public Moto(String marca, String modelo, String numPlaca, boolean vendido, int cilindradas, int alternador, double taxaCompressao) {
+        super(marca, modelo, numPlaca, vendido);
         this.cilindradas = cilindradas;
         this.alternador = alternador;
         this.taxaCompressao = taxaCompressao;

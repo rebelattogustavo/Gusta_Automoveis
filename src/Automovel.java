@@ -1,5 +1,6 @@
 public class Automovel {
     String marca, modelo, numPlaca;
+    boolean vendido = false;
 
     public Automovel() {
 
@@ -29,10 +30,19 @@ public class Automovel {
         this.numPlaca = numPlaca;
     }
 
+    public boolean getVendido() {
+        return vendido;
+    }
 
-    public Automovel(String marca, String modelo, String numPlaca) {
+    public void setVendido(boolean vendido) {
+        this.vendido = vendido;
+    }
+
+    public Automovel(String marca, String modelo, String numPlaca, boolean vendido) {
         this.marca = marca;
         this.modelo = modelo;
         this.numPlaca = numPlaca;
+        this.vendido = vendido;
+
     }
 }
