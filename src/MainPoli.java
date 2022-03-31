@@ -41,24 +41,6 @@ public class MainPoli {
                     login();
                 }
         });
-//        System.out.print("Informe a matrícula: ");
-//        int matricula = tec.nextInt();
-//        for(int i=0;i<listaPessoas.size();i++){
-//            if(listaPessoas.get(i) instanceof Funcionario || listaPessoas.get(i) instanceof Dono){
-//                if(matricula == listaPessoas.get(i).getMatricula()){
-//                    System.out.print("Informe a senha: ");
-//                    String senha = tec.next();
-//                    if(listaPessoas.get(i) instanceof Funcionario){
-//                        if(senha == ((Funcionario) listaPessoas.get(i)).getSenha()){
-//                            menuPrincipal();
-//                        }else{
-//                            System.out.println("Senha incorreta! Tente novamente");
-//                            login();
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
 
     public static void menuPrincipal(){
@@ -68,7 +50,8 @@ public class MainPoli {
                 "\n3- Editar" +
                 "\n4- Remover" +
                 "\n5- Vender" +
-                "\n6- Encerrar");
+                "\n6- Logout" +
+                "\n7- Encerrar");
         int opcao = tec.nextInt();
 
         switch (opcao){
@@ -230,6 +213,9 @@ public class MainPoli {
                 menuPrincipal();
                 break;
             case 6:
+                login();
+                break;
+            case 7:
                 System.exit(0);
                 break;
         }
