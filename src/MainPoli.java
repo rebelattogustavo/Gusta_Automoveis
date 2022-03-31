@@ -4,9 +4,61 @@ import java.util.Scanner;
 public class MainPoli {
     static Scanner tec = new Scanner(System.in);
     static ArrayList<Automovel> listaAutomoveis = new ArrayList<>();
+    static ArrayList<Pessoa> listaPessoas = new ArrayList<>();
 
     public static void main(String[] args) {
-        menuPrincipal();
+        cadastra();
+        login();
+    }
+
+    private static void cadastra(){
+        String nome = "Gustavo", cpf = "106.141.649-66", telefone = "(47)99124-3008", genero = "Masculino", senha = "1";
+        int idade = 17, matricula = 72130;
+        Dono dono = new Dono(nome, cpf, telefone, genero, idade, matricula, senha);
+        listaPessoas.add(dono);
+    }
+
+    public static void login(){
+        System.out.print("Informe a matrícula: ");
+        int matricula = tec.nextInt();
+        listaPessoas.forEach(pessoa -> {
+                if(matricula == pessoa.getMatricula()){
+                    if(pessoa instanceof Funcionario || pessoa instanceof Dono) {
+                        System.out.print("Informe a senha: ");
+                        String senha = tec.next();
+                        if(((Funcionario) pessoa).getSenha().equals(senha)){
+                            menuPrincipal();
+                        }else{
+                            System.out.println("Senha incorreta! Tente novamente");
+                            login();
+                        }
+                    }else {
+                        System.out.println("Você não é um funcionário!");
+                        login();
+                    }
+                }else {
+                    System.out.println("Matrícula incorreta! Tente novamente");
+                    login();
+                }
+        });
+//        System.out.print("Informe a matrícula: ");
+//        int matricula = tec.nextInt();
+//        for(int i=0;i<listaPessoas.size();i++){
+//            if(listaPessoas.get(i) instanceof Funcionario || listaPessoas.get(i) instanceof Dono){
+//                if(matricula == listaPessoas.get(i).getMatricula()){
+//                    System.out.print("Informe a senha: ");
+//                    String senha = tec.next();
+//                    if(listaPessoas.get(i) instanceof Funcionario){
+//                        if(senha == ((Funcionario) listaPessoas.get(i)).getSenha()){
+//                            menuPrincipal();
+//                        }else{
+//                            System.out.println("Senha incorreta! Tente novamente");
+//                            login();
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
     public static void menuPrincipal(){
@@ -22,18 +74,23 @@ public class MainPoli {
         switch (opcao){
             case 1:
                 int opcaoTipo = selecionarTipo("Cadastro: ");
-                if(opcaoTipo == 3){
+                if(opcaoTipo == 5){
                     menuPrincipal();
+                }else if(opcaoTipo == 1 || opcaoTipo == 2){
+                    listaAutomoveis.add(cadastrarAutomovel(opcaoTipo));
+                }else if(opcaoTipo == 3 || opcaoTipo == 4){
+                    listaPessoas.add(cadastrarPessoa(opcaoTipo));
                 }
-                listaAutomoveis.add(cadastrarAutomovel(opcaoTipo));
-                menuPrincipal();
+                    menuPrincipal();
                 break;
             case 2:
+                int listar = 0;
                 opcaoTipo = selecionarTipo("Listar: ");
-                if (opcaoTipo == 3){
+                if (opcaoTipo == 5){
                     menuPrincipal();
+                }else if(opcaoTipo == 1 || opcaoTipo == 2){
+                    listar = selecionarTipoListar("Informe o que deseja ver: ");
                 }
-                int listar = selecionarTipoListar("Informe o que deseja ver: ");
                 switch (opcaoTipo){
                     case 1:
                         switch (listar){
@@ -75,41 +132,86 @@ public class MainPoli {
                                 break;
                         }
                         break;
+                    case 3:
+                        listaPessoas.forEach(pessoa -> {
+                            if(pessoa instanceof Funcionario){
+                                System.out.println(pessoa);
+                            }
+                        });
+                        menuPrincipal();
+                        break;
+                    case 4:
+                        listaPessoas.forEach(pessoa -> {
+                            if(pessoa instanceof Cliente){
+                                System.out.println(pessoa);
+                            }
+                        });
+                        menuPrincipal();
+                        break;
                 }
                 break;
             case 3:
                 opcaoTipo = selecionarTipo("Editar");
-                if(opcaoTipo == 3){
+                int indice =0;
+                if(opcaoTipo == 5){
                     menuPrincipal();
-                }
-                int indice = verificaAutomovel(opcaoTipo);
-                if(indice == -1){
-                    System.out.println("Placa não encontrada!");
-                    menuPrincipal();
+                }else if(opcaoTipo == 1 || opcaoTipo == 2){
+                    indice = verificaAutomovel(opcaoTipo);
+                    if(indice == -1){
+                        System.out.println("Placa não encontrada!");
+                        menuPrincipal();
+                    }
+                }else if(opcaoTipo == 3 || opcaoTipo ==4){
+                    indice = verificaPessoa(opcaoTipo);
+                    if(indice == -1){
+                        System.out.println("Pessoa não encontrada!");
+                        menuPrincipal();
+                    }
                 }
                 int editar = selecionarEditar("Informe o que deseja editar: ");
-                switch (editar){
-                    case 1:
-                        listaAutomoveis.set(indice, cadastrarAutomovel(opcaoTipo));
-                        menuPrincipal();
-                        break;
-                    case 2:
-                        editarAtributo(indice, opcaoTipo);
-                        menuPrincipal();
-                        break;
+                if(opcaoTipo == 1 || opcaoTipo == 2){
+                    switch (editar){
+                        case 1:
+                            listaAutomoveis.set(indice, cadastrarAutomovel(opcaoTipo));
+                            menuPrincipal();
+                            break;
+                        case 2:
+                            editarAtributo(indice, opcaoTipo);
+                            menuPrincipal();
+                            break;
+                    }
+                }else if (opcaoTipo == 3 || opcaoTipo == 4){
+                    switch (editar){
+                        case 1:
+                            listaPessoas.set(indice, cadastrarPessoa(opcaoTipo));
+                            menuPrincipal();
+                            break;
+                        case 2:
+                            editarAtributo(indice, opcaoTipo);
+                            menuPrincipal();
+                    }
                 }
                 break;
             case 4:
                 opcaoTipo = selecionarTipo("Remover: ");
-                if (opcaoTipo == 3){
+                if (opcaoTipo == 5){
                     menuPrincipal();
-                }
-                indice = verificaAutomovel(opcaoTipo);
-                if(indice == -1){
-                    System.out.println("Placa não encontrada!");
-                    menuPrincipal();
-                }else{
-                    excluirCarro(indice);
+                }else if(opcaoTipo == 1 || opcaoTipo == 2){
+                    indice = verificaAutomovel(opcaoTipo);
+                    if(indice == -1){
+                        System.out.println("Placa não encontrada!");
+                        menuPrincipal();
+                    }else{
+                        excluirCarro(indice);
+                    }
+                }else if(opcaoTipo == 3 || opcaoTipo == 4){
+                    indice = verificaPessoa(opcaoTipo);
+                    if(indice == -1){
+                        System.out.println("Pessoa não encontrada!");
+                        menuPrincipal();
+                    }else{
+                        excluirPessoa(indice);
+                    }
                 }
                 menuPrincipal();
                 break;
@@ -137,28 +239,28 @@ public class MainPoli {
         System.out.println("Informe os dados:" +
                 "\nMarca: ");
         String marca = tec.next();
-        System.out.println("Modelo: ");
+        System.out.print("Modelo: ");
         String modelo = tec.next();
-        System.out.println("Número da placa: ");
+        System.out.print("Número da placa: ");
         String numPlaca = tec.next();
         Automovel automovel = new Automovel(marca, modelo, numPlaca, false);
 
         switch (opcaoTipo){
             case 1:
-                System.out.println("Quantidade de portas: ");
+                System.out.print("Quantidade de portas: ");
                 int qtdPorta = tec.nextInt();
-                System.out.println("Cavalos (HP): ");
+                System.out.print("Cavalos (HP): ");
                 int cavalos = tec.nextInt();
-                System.out.println("Tração: ");
+                System.out.print("Tração: ");
                 String tracao = tec.next();
                 return new Carro(automovel.getMarca(), automovel.getModelo(), automovel.getNumPlaca(), automovel.getVendido(),qtdPorta,
                         cavalos, tracao);
             case 2:
-                System.out.println("Informe a quantidade de CC: ");
+                System.out.print("Informe a quantidade de CC: ");
                 int cilindradas = tec.nextInt();
-                System.out.println("Informe a quantidade de WATTS no alternador: ");
+                System.out.print("Informe a quantidade de WATTS no alternador: ");
                 int alternador = tec.nextInt();
-                System.out.println("Informe a taxa de compressão: ");
+                System.out.print("Informe a taxa de compressão: ");
                 double  taxaCompressao = tec.nextDouble();
                 return new Moto(automovel.getMarca(), automovel.getModelo(), automovel.getNumPlaca(), automovel.getVendido(), cilindradas,
                         alternador, taxaCompressao);
@@ -166,17 +268,53 @@ public class MainPoli {
         return automovel;
     }
 
+    private static Pessoa cadastrarPessoa(int opcaoTipo){
+
+        System.out.print("Informe os dados:" +
+                "\nNome: ");
+        String nome = tec.next();
+        System.out.print("CPF: ");
+        String cpf = tec.next();
+        System.out.print("Número de telefone: ");
+        String telefone = tec.next();
+        System.out.print("Gênero: ");
+        String genero = tec.next();
+        System.out.print("Idade: ");
+        int idade = tec.nextInt();
+        System.out.print("Matrícula: ");
+        int matricula = tec.nextInt();
+        Pessoa pessoa = new Pessoa(nome, cpf, genero, telefone, idade, matricula);
+
+        switch (opcaoTipo) {
+            case 3:
+                System.out.println("Senha: ");
+                String senha = tec.next();
+                return new Funcionario(nome, cpf, telefone, genero, idade, matricula, senha);
+            case 4:
+                return  new Cliente(nome,cpf, telefone, genero, idade, matricula);
+        }
+        return pessoa;
+    }
+
     private static int verificaAutomovel(int opcaoTipo){
-        System.out.println("Informe a placa do veículo: ");
+        System.out.print("Informe a placa do veículo: ");
         String numPlaca = tec.next();
                 for (int i =0; i < listaAutomoveis.size(); i++) {
                     if (listaAutomoveis.get(i).getNumPlaca().equals(numPlaca)) {
                         return i;
-                    } else {
-                        return -1;
                     }
                 }
-        menuPrincipal();
+        return -1;
+    }
+
+   private static int verificaPessoa(int opcaoTipo){
+        System.out.print("Informe a matrícula da pessoa: ");
+        int matricula = tec.nextInt();
+            for (int i =0; i < listaPessoas.size(); i++) {
+                if (matricula == listaPessoas.get(i).getMatricula()) {
+                    return i;
+                }
+            }
         return -1;
     }
 
@@ -192,6 +330,17 @@ public class MainPoli {
                 "\n1- Marca" +
                 "\n2- Modelo" +
                 "\n3- Número da placa");
+    }
+
+    private static void editaPessoa(){
+
+        System.out.println("Informe o que deseja editar:" +
+                "\n1- Nome" +
+                "\n2- CPF" +
+                "\n3- Telefone" +
+                "\n4- Gênero" +
+                "\n5- Idade" +
+                "\n6- Matrícula");
     }
 
     private static void editarAtributo(int indice,int opcaoTipo){
@@ -224,7 +373,7 @@ public class MainPoli {
                         ((Carro)listaAutomoveis.get(indice)).setCavalos(tec.nextInt());
                         break;
                     case 6:
-                        System.out.println("Informe a nova tração: ");
+                        System.out.print("Informe a nova tração: ");
                         ((Carro)listaAutomoveis.get(indice)).setTracao(tec.next());
                         break;
                 }
@@ -262,8 +411,73 @@ public class MainPoli {
                         break;
                 }
                 break;
-        }
-    }
+            case 3:
+                editaPessoa();
+                System.out.println("7- Senha");
+                opcao = tec.nextInt();
+                switch (opcao){
+                    case 1:
+                        System.out.print("Informe o novo nome: ");
+                        listaPessoas.get(indice).setNome(tec.next());
+                        break;
+                    case 2:
+                        System.out.print("Informe o novo CPF: ");
+                        listaPessoas.get(indice).setCpf(tec.next());
+                        break;
+                    case 3:
+                        System.out.print("Informe o novo telefone: ");
+                        listaPessoas.get(indice).setTelefone(tec.next());
+                        break;
+                    case 4:
+                        System.out.print("Informe o novo gênero: ");
+                        listaPessoas.get(indice).setGenero(tec.next());
+                        break;
+                    case 5:
+                        System.out.print("Informe a nova idade: ");
+                        listaPessoas.get(indice).setIdade(tec.nextInt());
+                        break;
+                    case 6:
+                        System.out.print("Informe a nova matrícula: ");
+                        listaPessoas.get(indice).setMatricula(tec.nextInt());
+                        break;
+                    case 7:
+                        System.out.print("Informe a nova senha");
+                        ((Funcionario)listaPessoas.get(indice)).setSenha(tec.next());
+                        break;
+                }
+                break;
+            case 4:
+                editaPessoa();
+                opcao = tec.nextInt();
+                switch (opcao){
+                    case 1:
+                        System.out.print("Informe o novo nome: ");
+                        listaPessoas.get(indice).setNome(tec.next());
+                        break;
+                    case 2:
+                        System.out.print("Informe o novo CPF: ");
+                        listaPessoas.get(indice).setCpf(tec.next());
+                        break;
+                    case 3:
+                        System.out.print("Informe o novo telefone: ");
+                        listaPessoas.get(indice).setTelefone(tec.next());
+                        break;
+                    case 4:
+                        System.out.print("Informe o novo gênero: ");
+                        listaPessoas.get(indice).setGenero(tec.next());
+                        break;
+                    case 5:
+                        System.out.print("Informe a nova idade: ");
+                        listaPessoas.get(indice).setIdade(tec.nextInt());
+                        break;
+                    case 6:
+                        System.out.print("Informe a nova matrícula: ");
+                        listaPessoas.get(indice).setMatricula(tec.nextInt());
+                        break;
+
+                }
+                break;
+    }}
 
     private static void excluirCarro(int indice){
         System.out.println("Realmente deseja excluir esse veículo?");
@@ -274,7 +488,17 @@ public class MainPoli {
         else{
             menuPrincipal();
         }
-        menuPrincipal();
+    }
+
+    private static void excluirPessoa(int indice){
+        System.out.println("Realmente deseja excluir essa pessoa?");
+        char resposta = tec.next().charAt(0);
+        if(resposta == 's' || resposta == 'S'){
+            listaPessoas.remove(indice);
+        }
+        else{
+            menuPrincipal();
+        }
     }
 
     private static int selecionarTipoListar(String opcaoMenu){
@@ -301,7 +525,9 @@ public class MainPoli {
         System.out.println(opcaoMenu +
                 "\n1- Carro" +
                 "\n2- Moto" +
-                "\n3- Voltar");
+                "\n3- Funcionário" +
+                "\n4- Cliente" +
+                "\n5- Voltar");
         return tec.nextInt();
     }
 
