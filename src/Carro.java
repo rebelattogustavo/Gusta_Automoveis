@@ -31,8 +31,8 @@ public class Carro extends Automovel{
         this.tracao = tracao;
     }
 
-    public Carro(String marca, String modelo, String numPlaca, boolean vendido, int qtdPorta, int cavalos, String tracao) {
-        super(marca, modelo, numPlaca, vendido);
+    public Carro(String marca, String modelo, String numPlaca, boolean vendido,double preco, int qtdPorta, int cavalos, String tracao) {
+        super(marca, modelo, numPlaca, vendido,preco);
         this.cavalos = cavalos;
         this.qtdPorta = qtdPorta;
         this.tracao = tracao;
