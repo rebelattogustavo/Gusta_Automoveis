@@ -47,7 +47,8 @@ public class Carro extends Automovel{
                 ", numPlaca='" + numPlaca + '\'' +
                 ", qtdPorta=" + qtdPorta +
                 ", cavalos=" + cavalos +
-                ", tracao='" + tracao + '\'' +
+                ", tracao=" + tracao + '\'' +
+                ", dono='" + getNomeDono() +'\'' +
                 '}';
     }
 }

@@ -24,32 +24,27 @@ public class MainPoli {
     public static void login(){
         System.out.print("Informe a matrícula: ");
         int matricula = tec.nextInt();
-        listaPessoas.forEach(pessoa -> {
-                if(matricula == pessoa.getMatricula()){
-                    if(pessoa instanceof Funcionario || pessoa instanceof Dono) {
-                        System.out.print("Informe a senha: ");
-                        String senha = tec.next();
-                        for(int i =0; i<listaPessoas.size();i++){
-                            if(((Funcionario) pessoa).getSenha().equals(senha)){
-                                menuPrincipal(indicePessoa);
-                                indicePessoa = i;
-                            }else{
-                                System.out.println("Senha incorreta! Tente novamente");
-                                login();
-                            }
+        for(int i=0; i< listaPessoas.size();i++){
+            if(matricula == listaPessoas.get(i).getMatricula()){
+                if(listaPessoas.get(i) instanceof Funcionario || listaPessoas.get(i) instanceof Dono) {
+                    System.out.print("Informe a senha: ");
+                    String senha = tec.next();
+                        if(((Funcionario) listaPessoas.get(i)).getSenha().equals(senha)){
+                            indicePessoa = i;
+                            menuPrincipal();
+                        }else{
+                            System.out.println("Senha incorreta! Tente novamente");
+                            login();
                         }
-                    }else {
-                        System.out.println("Você não é um funcionário!");
-                        login();
-                    }
                 }else {
-                    System.out.println("Matrícula incorreta! Tente novamente");
+                    System.out.println("Você não é um funcionário!");
                     login();
                 }
-        });
+            }
+        }
     }
 
-    public static void menuPrincipal(int indicePessoa){
+    public static void menuPrincipal(){
         System.out.println("--- MENU PRINCIPAL ---" +
                 "\n1- Cadastrar" +
                 "\n2- Listar" +
@@ -64,19 +59,19 @@ public class MainPoli {
             case 1:
                 int opcaoTipo = selecionarTipo("Cadastro: ");
                 if(opcaoTipo == 5){
-                    menuPrincipal(indicePessoa);
+                    menuPrincipal();
                 }else if(opcaoTipo == 1 || opcaoTipo == 2){
                     listaAutomoveis.add(cadastrarAutomovel(opcaoTipo));
                 }else if(opcaoTipo == 3 || opcaoTipo == 4){
                     listaPessoas.add(cadastrarPessoa(opcaoTipo));
                 }
-                    menuPrincipal(indicePessoa);
+                    menuPrincipal();
                 break;
             case 2:
                 int listar = 0;
                 opcaoTipo = selecionarTipo("Listar: ");
                 if (opcaoTipo == 5){
-                    menuPrincipal(indicePessoa);
+                    menuPrincipal();
                 }else if(opcaoTipo == 1 || opcaoTipo == 2){
                     listar = selecionarTipoListar("Informe o que deseja ver: ");
                 }
@@ -89,7 +84,7 @@ public class MainPoli {
                                         System.out.println(automovel);
                                     }
                                 });
-                                menuPrincipal(indicePessoa);
+                                menuPrincipal();
                                 break;
                             case 2:
                                 listaAutomoveis.forEach(automovel -> {
@@ -97,7 +92,7 @@ public class MainPoli {
                                         System.out.println(automovel);
                                     }
                                 });
-                                menuPrincipal(indicePessoa);
+                                menuPrincipal();
                                 break;
                         }
                         break;
@@ -109,7 +104,7 @@ public class MainPoli {
                                         System.out.println(automovel);
                                     }
                                 });
-                                menuPrincipal(indicePessoa);
+                                menuPrincipal();
                                 break;
                             case 2:
                                 listaAutomoveis.forEach(automovel -> {
@@ -117,7 +112,7 @@ public class MainPoli {
                                         System.out.println(automovel);
                                     }
                                 });
-                                menuPrincipal(indicePessoa);
+                                menuPrincipal();
                                 break;
                         }
                         break;
@@ -127,7 +122,7 @@ public class MainPoli {
                                 System.out.println(pessoa);
                             }
                         });
-                        menuPrincipal(indicePessoa);
+                        menuPrincipal();
                         break;
                     case 4:
                         listaPessoas.forEach(pessoa -> {
@@ -135,7 +130,7 @@ public class MainPoli {
                                 System.out.println(pessoa);
                             }
                         });
-                        menuPrincipal(indicePessoa);
+                        menuPrincipal();
                         break;
                 }
                 break;
@@ -143,18 +138,18 @@ public class MainPoli {
                 opcaoTipo = selecionarTipo("Editar");
                 int indice =0;
                 if(opcaoTipo == 5){
-                    menuPrincipal(indicePessoa);
+                    menuPrincipal();
                 }else if(opcaoTipo == 1 || opcaoTipo == 2){
                     indice = verificaAutomovel(opcaoTipo);
                     if(indice == -1){
                         System.out.println("Placa não encontrada!");
-                        menuPrincipal(indicePessoa);
+                        menuPrincipal();
                     }
                 }else if(opcaoTipo == 3 || opcaoTipo ==4){
                     indice = verificaPessoa(opcaoTipo);
                     if(indice == -1){
                         System.out.println("Pessoa não encontrada!");
-                        menuPrincipal(indicePessoa);
+                        menuPrincipal();
                     }
                 }
                 int editar = selecionarEditar("Informe o que deseja editar: ");
@@ -162,34 +157,34 @@ public class MainPoli {
                     switch (editar){
                         case 1:
                             listaAutomoveis.set(indice, cadastrarAutomovel(opcaoTipo));
-                            menuPrincipal(indicePessoa);
+                            menuPrincipal();
                             break;
                         case 2:
                             editarAtributo(indice, opcaoTipo);
-                            menuPrincipal(indicePessoa);
+                            menuPrincipal();
                             break;
                     }
                 }else if (opcaoTipo == 3 || opcaoTipo == 4){
                     switch (editar){
                         case 1:
                             listaPessoas.set(indice, cadastrarPessoa(opcaoTipo));
-                            menuPrincipal(indicePessoa);
+                            menuPrincipal();
                             break;
                         case 2:
                             editarAtributo(indice, opcaoTipo);
-                            menuPrincipal(indicePessoa);
+                            menuPrincipal();
                     }
                 }
                 break;
             case 4:
                 opcaoTipo = selecionarTipo("Remover: ");
                 if (opcaoTipo == 5){
-                    menuPrincipal(indicePessoa);
+                    menuPrincipal();
                 }else if(opcaoTipo == 1 || opcaoTipo == 2){
                     indice = verificaAutomovel(opcaoTipo);
                     if(indice == -1){
                         System.out.println("Placa não encontrada!");
-                        menuPrincipal(indicePessoa);
+                        menuPrincipal();
                     }else{
                         excluirCarro(indice);
                     }
@@ -197,26 +192,26 @@ public class MainPoli {
                     indice = verificaPessoa(opcaoTipo);
                     if(indice == -1){
                         System.out.println("Pessoa não encontrada!");
-                        menuPrincipal(indicePessoa);
+                        menuPrincipal();
                     }else{
                         excluirPessoa(indice);
                     }
                 }
-                menuPrincipal(indicePessoa);
+                menuPrincipal();
                 break;
             case 5:
                 opcaoTipo = selecionarTipo("Vender: ");
                 if (opcaoTipo == 3){
-                    menuPrincipal(indicePessoa);
+                    menuPrincipal();
                 }
                 indice = verificaAutomovel(opcaoTipo);
                 if(indice == -1){
                     System.out.println("Placa não encontrada!");
-                    menuPrincipal(indicePessoa);
+                    menuPrincipal();
                 }else{
                     venderAutomovel(indice,indicePessoa);
                 }
-                menuPrincipal(indicePessoa);
+                menuPrincipal();
                 break;
             case 6:
                 login();
@@ -480,7 +475,7 @@ public class MainPoli {
             listaAutomoveis.remove(indice);
         }
         else{
-            menuPrincipal(indicePessoa);
+            menuPrincipal();
         }
     }
 
@@ -491,7 +486,7 @@ public class MainPoli {
             listaPessoas.remove(indice);
         }
         else{
-            menuPrincipal(indicePessoa);
+            menuPrincipal();
         }
     }
 
@@ -503,22 +498,38 @@ public class MainPoli {
     }
 
     private static void venderAutomovel(int indice,int indicePessoa){
-            System.out.println("A venda terá desconto?");
-            char resp = tec.next().charAt(0);
-            if(resp == 's' || resp == 'S'){
-                System.out.println("Qual a porcentagem de desconto?");
-                double por = tec.nextDouble();
-                if(por > 2){
-                    System.out.println("Valor de desconto maior que a comissão!");
-                    venderAutomovel(indice,indicePessoa);
-                }else{
-                    ((Funcionario)listaPessoas.get(indicePessoa)).mudarSalario(listaAutomoveis.get(indice).getPreco(),por);
+        System.out.print("Informe o primeiro nome do dono: ");
+        String nomeDono = tec.next();
+        for(int i = 0;i<listaPessoas.size();i++){
+            if(listaPessoas.get(i) instanceof Cliente) {
+                if(nomeDono.equals(listaPessoas.get(i).getNome())){
+                    System.out.println(listaPessoas.get(i).getNome() +" - "+ listaPessoas.get(i).getMatricula());
                 }
-            }else if(resp == 'n' || resp == 'N'){
-                ((Funcionario) listaPessoas.get(indicePessoa)).mudarSalario(listaAutomoveis.get(indice).getPreco());
             }
-            listaAutomoveis.get(indice).setVendido(true);
-            System.out.println("Automóvel vendido com sucesso!");
+        }
+        System.out.print("Informe o código do dono: ");
+        int codigo = tec.nextInt();
+        for(int i =0;i<listaPessoas.size();i++){
+            if(codigo == listaPessoas.get(i).getMatricula()){
+                listaAutomoveis.get(indice).setNomeDono(listaPessoas.get(i).getNome());
+            }
+        }
+        System.out.println("A venda terá desconto?");
+        char resp = tec.next().charAt(0);
+        if(resp == 's' || resp == 'S'){
+            System.out.println("Qual a porcentagem de desconto?");
+            double por = tec.nextDouble();
+            if(por > 2){
+                System.out.println("Valor de desconto maior que a comissão!");
+                venderAutomovel(indice,indicePessoa);
+            }else{
+                ((Funcionario) listaPessoas.get(indicePessoa)).mudarSalario(listaAutomoveis.get(indice).getPreco(),por);
+            }
+        }else if(resp == 'n' || resp == 'N'){
+            ((Funcionario) listaPessoas.get(indicePessoa)).mudarSalario(listaAutomoveis.get(indice).getPreco());
+        }
+        listaAutomoveis.get(indice).setVendido(true);
+        System.out.println("Automóvel vendido com sucesso!");
     }
 
     private static int selecionarTipo(String opcaoMenu){

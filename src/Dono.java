@@ -7,6 +7,16 @@ public class Dono extends Funcionario{
     }
 
     @Override
+    public double getSalario() {
+        return salario;
+    }
+
+    @Override
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
+
+    @Override
     public void mudarSalario(double precoAuto){
         this.setSalario(this.getSalario());
     }

@@ -24,7 +24,7 @@ public class Funcionario extends Pessoa{
     }
 
     public void mudarSalario(double preco, double por){
-        this.salario += preco * por;
+        this.salario += preco * (por/100);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Funcionario extends Pessoa{
                 ", idade: " + getIdade() +
                 ", matricula: " + getMatricula() +
                 ", senha: " + senha +
-                ", salario: " + salario +
+                ", salario: " + getSalario() +
                 '}';
     }
 

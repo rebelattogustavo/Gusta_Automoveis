@@ -1,5 +1,5 @@
 public class Automovel {
-    String marca, modelo, numPlaca;
+    String marca, modelo, numPlaca, nomeDono="Indefinido";
     double preco;
     boolean vendido = false;
 
@@ -40,6 +40,14 @@ public class Automovel {
     }
 
     public double getPreco() { return preco; }
+
+    public String getNomeDono() {
+        return nomeDono;
+    }
+
+    public void setNomeDono(String nomeDono) {
+        this.nomeDono = nomeDono;
+    }
 
     public void setPreco(double preco) { this.preco = preco; }
 
