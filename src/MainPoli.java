@@ -500,11 +500,21 @@ public class MainPoli {
     private static void venderAutomovel(int indice,int indicePessoa){
         System.out.print("Informe o primeiro nome do dono: ");
         String nomeDono = tec.next();
+        int cont=0;
         for(int i = 0;i<listaPessoas.size();i++){
             if(listaPessoas.get(i) instanceof Cliente) {
-                if(nomeDono.equals(listaPessoas.get(i).getNome())){
-                    System.out.println(listaPessoas.get(i).getNome() +" - "+ listaPessoas.get(i).getMatricula());
+                for(int y=0;y<nomeDono.length();y++){
+                    if(nomeDono.length() > listaPessoas.get(i).getNome().length()){
+                        i++;
+                    }
+                    if(nomeDono.charAt(y) == listaPessoas.get(i).getNome().charAt(y)){
+                        cont++;
+                    }
                 }
+                if(cont == nomeDono.length()){
+                    System.out.println(listaPessoas.get(i).getNome() +" - "+listaPessoas.get(i).getMatricula());
+                }
+                    cont=0;
             }
         }
         System.out.print("Informe o código do dono: ");
