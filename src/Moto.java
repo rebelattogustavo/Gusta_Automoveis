@@ -6,6 +6,8 @@ public class Moto extends Automovel{
         super();
     }
 
+
+
     public int getCilindradas() {
         return cilindradas;
     }
